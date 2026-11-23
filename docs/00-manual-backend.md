@@ -24,19 +24,19 @@
 
 ---
 
-## Fase 2. Esqueleto mínimo
+## Fase 2. Configuración
 * Inicializar proyecto con `npm init` e instalar **Express**.
-* Crear la estructura de carpetas: `routes`, `controllers`, `services`, `models`, `middlewares`.
-* Crear un endpoint `GET /health` que responda `ok`.
-* *Criterio de cierre:* Si arranca y responde, esta fase está cerrada.
-
----
-
-## Fase 3. Configuración
 * Configurar variables de entorno con `dotenv`.
 * Crear `.env` (ignorado por Git) y `.env.example` (commiteado).
 * Definir variables iniciales: puerto, URL de Mongo y, más adelante, el secreto del JWT.
 
+---
+
+## Fase 3. Esqueleto mínimo
+* Crear la estructura de carpetas: `routes`, `controllers`, `services`, `models`, `middlewares`.
+* Crear un endpoint `GET /health` que responda `ok`.
+* *Criterio de cierre:* Si arranca y responde, esta fase está cerrada.
+* 
 ---
 
 ## Fase 4. Base de datos
