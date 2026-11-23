@@ -32,18 +32,18 @@
 
 ---
 
-## Fase 3. Esqueleto mínimo
-* Crear la estructura de carpetas: `routes`, `controllers`, `services`, `models`, `middlewares`.
-* Crear un endpoint `GET /health` que responda `ok`.
-* *Criterio de cierre:* Si arranca y responde, esta fase está cerrada.
-* 
----
-
-## Fase 4. Base de datos
+## Fase 3. Base de datos
 * Crear `docker-compose.yml` con **MongoDB** y persistencia mediante volumen.
 * Configurar la conexión con **Mongoose**.
 * Comprobar que la API arranca conectada correctamente a la base de datos.
+  
+---
 
+## Fase 4. Esqueleto mínimo
+* Crear la estructura de carpetas: `routes`, `controllers`, `services`, `models`, `middlewares`.
+* Crear un endpoint `GET /health` que responda `ok`.
+* *Criterio de cierre:* Si arranca y responde, esta fase está cerrada.
+  
 ---
 
 ## Fase 5. Primera entidad completa (de punta a punta)

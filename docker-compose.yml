@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: mongo:8 # Imagen de MongoDB que utilizará el contenedor
+    ports:
+      - "127.0.0.1:27017:27017" # Puerto de tu ordenador → puerto del contenedor
+    volumes:
+      - wanted_mongo_data:/data/db # Guarda los datos fuera del contenedor
+
+volumes:
+  wanted_mongo_data: # Volumen persistente gestionado por Docker
+
+  
