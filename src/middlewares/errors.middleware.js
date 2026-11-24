@@ -16,6 +16,11 @@ function errorHandler(error, req, res, next) {
         return;
     }
 
+    if (error.type === "entity.parse.failed") {
+        res.status(400).json({ error: "El cuerpo de la petición contiene JSON mal escrito." });
+        return;
+    }
+
     if (error.status === 400 || error.status === 404) {
         res.status(error.status).json({ error: error.message });
         return;
