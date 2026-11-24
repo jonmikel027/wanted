@@ -13,13 +13,14 @@ async function getAllPosters(req, res) {
     res.json(allPosters);
 }
 
-async function getPosterById(req, res) {
+async function getPosterById(req, res, next) {
 
     const poster = await findPosterById(req.params.posterId);
 
     if (!poster) {
-        res.status(404).json({ error: "error 404. Cartel no encontrado." });
-        return;
+        const error = new Error("Cartel no encontrado.");
+        error.status = 404;
+        return next(error);
     }
 
     res.json(poster);
@@ -42,7 +43,7 @@ async function postPoster(req, res) {
     res.status(201).json(newPoster);
 }
 
-async function editPoster(req, res) {
+async function editPoster(req, res, next) {
 
     const editedPosterId = req.params.posterId;
 
@@ -59,22 +60,24 @@ async function editPoster(req, res) {
     const editedPoster = await updatePosterById(editedPosterId, posterNewData);
 
     if (!editedPoster) {
-        res.status(404).json({ error: "error 404. Cartel no encontrado." });
-        return;
+        const error = new Error("Cartel no encontrado.");
+        error.status = 404;
+        return next(error);
     }
 
     res.status(200).json(editedPoster);
 }
 
-async function deletePoster(req, res) {
+async function deletePoster(req, res, next) {
 
     const deletedPosterId = req.params.posterId;
 
     const deletedPoster = await deletePosterById(deletedPosterId);
 
     if (!deletedPoster) {
-        res.status(404).json({ error: "error 404. Cartel no encontrado." });
-        return;
+        const error = new Error("Cartel no encontrado.");
+        error.status = 404;
+        return next(error);
     }
 
     res.status(200).json({ mensaje: "200 Ok. Cartel eliminado." });

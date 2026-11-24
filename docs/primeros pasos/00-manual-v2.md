@@ -21,13 +21,14 @@
 
 > **Flujo de trabajo:** crear una rama desde `dev`, desarrollar y comprobar, hacer commit, integrar en `dev` y hacer push.
 
-| Prefijo | Uso |
-| :--- | :--- |
-| `chore` | Configuración y organización |
-| `feat` | Funcionalidad nueva |
-| `fix` | Corrección de errores |
-| `docs` | Documentación |
-| `test` | Pruebas |
+| Prefijo    | Uso                                                                          |
+| :--------- | :--------------------------------------------------------------------------- |
+| `chore`    | Configuración y organización                                                 |
+| `feat`     | Funcionalidad nueva                                                          |
+| `refactor` | reorganizar o mejorar código sin añadir funcionalidades ni corregir errores. |
+| `fix`      | Corrección de errores                                                        |
+| `docs`     | Documentación                                                                |
+| `test`     | Pruebas                                                                      |
 
 * **Ramas:** con nombres sencillos y descriptivos.
 * **Commits:** en infinitivo (ej. `feat: añadir creación de carteles`).

@@ -16,6 +16,11 @@ function errorHandler(error, req, res, next) {
         return;
     }
 
+    if (error.status === 404) {
+        res.status(404).json({ error: error.message });
+        return;
+    }
+
     res.status(500).json({ error: "error 500. Error interno del servidor." });
 }
 
