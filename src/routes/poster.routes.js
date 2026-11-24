@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validatePosterId } from "../middlewares/validatePosterId.js";
 import {
     getAllPosters,
     getPosterById,
@@ -10,9 +11,9 @@ import {
 const posterRouter = Router();
 
 posterRouter.get("/", getAllPosters);
-posterRouter.get("/:posterId", getPosterById);
+posterRouter.get("/:posterId", validatePosterId, getPosterById);
 posterRouter.post("/", postPoster);
-posterRouter.patch("/:posterId", editPoster);
-posterRouter.delete("/:posterId", deletePoster);
+posterRouter.patch("/:posterId", validatePosterId, editPoster);
+posterRouter.delete("/:posterId", validatePosterId, deletePoster);
 
 export { posterRouter };
