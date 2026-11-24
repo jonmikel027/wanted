@@ -6,4 +6,13 @@ async function listAllPosters() {
     return allPosters;
 }
 
-export { listAllPosters };
+async function findPosterById(posterId) {
+
+    const foundPoster = await PosterModel.findById(posterId);
+    return foundPoster;
+}
+
+export {
+    listAllPosters,
+    findPosterById
+};

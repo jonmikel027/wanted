@@ -1,4 +1,7 @@
-import { listAllPosters } from "../services/poster.service.js";
+import {
+    listAllPosters,
+    findPosterById
+} from "../services/poster.service.js";
 
 async function getAllPosters(req, res) {
 
@@ -7,4 +10,19 @@ async function getAllPosters(req, res) {
     res.json(allPosters);
 }
 
-export { getAllPosters };
+async function getPosterById(req, res) {
+
+    const poster = await findPosterById(req.params.posterId);
+
+    if (!poster) {
+        res.status(404).json({ error: "error 404. Poster no encontrado." });
+        return;
+    }
+
+    res.json(poster);
+}
+
+export {
+    getAllPosters,
+    getPosterById
+};
