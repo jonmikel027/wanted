@@ -16,8 +16,8 @@ function errorHandler(error, req, res, next) {
         return;
     }
 
-    if (error.status === 404) {
-        res.status(404).json({ error: error.message });
+    if (error.status === 400 || error.status === 404) {
+        res.status(error.status).json({ error: error.message });
         return;
     }
 
