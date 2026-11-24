@@ -2,7 +2,8 @@ import {
     listAllPosters,
     findPosterById,
     createPoster,
-    updatePosterById
+    updatePosterById,
+    deletePosterById
 } from "../services/poster.service.js";
 
 async function getAllPosters(req, res) {
@@ -65,9 +66,24 @@ async function editPoster(req, res) {
     res.status(200).json(editedPoster);
 }
 
+async function deletePoster(req, res) {
+
+    const deletedPosterId = req.params.posterId;
+
+    const deletedPoster = await deletePosterById(deletedPosterId);
+
+    if (!deletedPoster) {
+        res.status(404).json({ error: "error 404. Cartel no encontrado." });
+        return;
+    }
+
+    res.status(200).json({ mensaje: "200 Ok. Cartel eliminado." });
+}
+
 export {
     getAllPosters,
     getPosterById,
     postPoster,
-    editPoster
+    editPoster,
+    deletePoster
 };

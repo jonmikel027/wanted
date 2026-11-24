@@ -28,9 +28,16 @@ async function updatePosterById(posterId, posterData) {
     return updatedPoster;
 }
 
+async function deletePosterById(posterId) {
+
+    const deletedPoster = await PosterModel.findByIdAndDelete(posterId);
+    return deletedPoster;
+}
+
 export {
     listAllPosters,
     findPosterById,
     createPoster,
-    updatePosterById
+    updatePosterById,
+    deletePosterById
 };
