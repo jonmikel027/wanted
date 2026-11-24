@@ -18,8 +18,19 @@ async function createPoster(posterData) {
     return newPoster;
 }
 
+async function updatePosterById(posterId, posterData) {
+
+    const updatedPoster = await PosterModel.findByIdAndUpdate(posterId,
+        { $set: posterData },
+        { new: true, runValidators: true }
+    );
+
+    return updatedPoster;
+}
+
 export {
     listAllPosters,
     findPosterById,
-    createPoster
+    createPoster,
+    updatePosterById
 };

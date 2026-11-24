@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
     getAllPosters,
     getPosterById,
-    postPoster
+    postPoster,
+    editPoster
 } from "../controllers/poster.controller.js";
 
 const posterRouter = Router();
@@ -10,5 +11,6 @@ const posterRouter = Router();
 posterRouter.get("/", getAllPosters);
 posterRouter.get("/:posterId", getPosterById);
 posterRouter.post("/", postPoster);
+posterRouter.patch("/:posterId", editPoster);
 
 export { posterRouter };

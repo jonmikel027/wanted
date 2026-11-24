@@ -1,7 +1,8 @@
 import {
     listAllPosters,
     findPosterById,
-    createPoster
+    createPoster,
+    updatePosterById
 } from "../services/poster.service.js";
 
 async function getAllPosters(req, res) {
@@ -16,7 +17,7 @@ async function getPosterById(req, res) {
     const poster = await findPosterById(req.params.posterId);
 
     if (!poster) {
-        res.status(404).json({ error: "error 404. Poster no encontrado." });
+        res.status(404).json({ error: "error 404. Cartel no encontrado." });
         return;
     }
 
@@ -40,8 +41,33 @@ async function postPoster(req, res) {
     res.status(201).json(newPoster);
 }
 
+async function editPoster(req, res) {
+
+    const editedPosterId = req.params.posterId;
+
+    const editableFields = ["wantedPerson", "photoUrl", "info", "reward", "status", "openTipLine"];
+
+    const posterNewData = {};
+
+    for (const field of editableFields) {
+        if (req.body[field] !== undefined) {
+            posterNewData[field] = req.body[field];
+        }
+    }
+
+    const editedPoster = await updatePosterById(editedPosterId, posterNewData);
+
+    if (!editedPoster) {
+        res.status(404).json({ error: "error 404. Cartel no encontrado." });
+        return;
+    }
+
+    res.status(200).json(editedPoster);
+}
+
 export {
     getAllPosters,
     getPosterById,
-    postPoster
+    postPoster,
+    editPoster
 };
