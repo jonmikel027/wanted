@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validatePosterId } from "../middlewares/validatePosterId.js";
+import { validatePosterId } from "../middlewares/validatePosterId.middleware.js";
 import {
     getAllPosters,
     getPosterById,
