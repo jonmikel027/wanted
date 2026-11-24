@@ -12,7 +12,14 @@ async function findPosterById(posterId) {
     return foundPoster;
 }
 
+async function createPoster(posterData) {
+
+    const newPoster = await PosterModel.create(posterData);
+    return newPoster;
+}
+
 export {
     listAllPosters,
-    findPosterById
+    findPosterById,
+    createPoster
 };
