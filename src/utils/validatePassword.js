@@ -3,9 +3,9 @@ function validatePassword(password) {
     const maxLength = null; 
     const requireNumber = true;
     const requireUppercase = true;
+    const requireSpecialCharacter = false;
     const specialCharacters = "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?¿¡";
-    const requireSpecialCharacter = true;
-
+    
     if (typeof password !== "string") {
         return false;
     }
