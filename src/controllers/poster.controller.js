@@ -1,3 +1,4 @@
+import { hasPosterPermissions } from "../utils/postersPermissions.js";
 import {
     listAllPosters,
     findPosterById,
@@ -45,7 +46,21 @@ async function postPoster(req, res) {
 
 async function editPoster(req, res, next) {
 
-    const editedPosterId = req.params.posterId;
+    const posterToEditId = req.params.posterId;
+
+    const posterToEdit = await findPosterById(posterToEditId);
+
+    if (!posterToEdit) {
+        const error = new Error("Cartel no encontrado.");
+        error.status = 404;
+        return next(error);
+    }
+
+    if (!hasPosterPermissions(req.user, posterToEdit)) {
+        const error = new Error("No tienes permiso para editar este cartel.");
+        error.status = 403;
+        return next(error);
+    }
 
     const editableFields = ["wantedPerson", "photoUrl", "info", "reward", "status", "openTipLine"];
 
@@ -57,7 +72,7 @@ async function editPoster(req, res, next) {
         }
     }
 
-    const editedPoster = await updatePosterById(editedPosterId, posterNewData);
+    const editedPoster = await updatePosterById(posterToEditId, posterNewData);
 
     if (!editedPoster) {
         const error = new Error("Cartel no encontrado.");
@@ -70,9 +85,23 @@ async function editPoster(req, res, next) {
 
 async function deletePoster(req, res, next) {
 
-    const deletedPosterId = req.params.posterId;
+    const posterToDeleteId = req.params.posterId;
 
-    const deletedPoster = await deletePosterById(deletedPosterId);
+    const posterToDelete = await findPosterById(posterToDeleteId);
+
+    if (!posterToDelete) {
+        const error = new Error("Cartel no encontrado.");   
+        error.status = 404;
+        return next(error);
+    }
+
+    if (!hasPosterPermissions(req.user, posterToDelete)) {
+        const error = new Error("No tienes permiso para eliminar este cartel.");
+        error.status = 403;
+        return next(error);
+    }
+
+    const deletedPoster = await deletePosterById(posterToDeleteId);
 
     if (!deletedPoster) {
         const error = new Error("Cartel no encontrado.");

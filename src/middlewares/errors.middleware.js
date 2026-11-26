@@ -21,7 +21,10 @@ function errorHandler(error, req, res, next) {
         return;
     }
 
-    if (error.status === 400 || error.status === 401 || error.status === 404) {
+    if (error.status === 400 ||
+        error.status === 401 ||
+        error.status === 403 ||
+        error.status === 404) {
         res.status(error.status).json({ error: error.message });
         return;
     }
