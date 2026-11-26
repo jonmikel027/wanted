@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 import { authorizedBadges } from "../config/authorizedBadges.js";
 import { validatePassword } from "../utils/validatePassword.js";
 import { findUserByBadge, createUser } from "./user.service.js";
@@ -50,6 +51,48 @@ async function registerUser({ name, badge, password }) {
     return newUser;
 }
 
-export{
-    registerUser
+async function loginUser({ badge, password }) {
+
+    if (typeof badge !== "string" || typeof password !== "string") {
+        const error = new Error("Formato de placa o contraseña no válido.");
+        error.status = 400;
+        throw error;
+    }
+
+    if (badge.trim() === "" || password === "") {
+        const error = new Error("La placa y la contraseña son obligatorias.");
+        error.status = 400;
+        throw error;
+    }
+
+    const user = await findUserByBadge(badge.trim());
+
+    if (!user) {
+        const error = new Error("Credenciales incorrectas.");
+        error.status = 401;
+        throw error;
+    }
+
+    const correctPassword = await bcrypt.compare(password, user.passwordHash);
+
+    if (!correctPassword) {
+        const error = new Error("Credenciales incorrectas.");
+        error.status = 401;
+        throw error;
+    }
+
+    const token = jwt.sign({
+        userId: user._id.toString(),
+        role: user.role
+    },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+
+    return { user, token };
+}
+
+export {
+    registerUser,
+    loginUser
 }

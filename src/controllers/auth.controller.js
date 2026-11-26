@@ -1,4 +1,4 @@
-import { registerUser } from "../services/auth.service.js";
+import { registerUser, loginUser } from "../services/auth.service.js";
 
 async function postUser(req, res) {
 
@@ -20,6 +20,28 @@ async function postUser(req, res) {
     });
 }
 
-export {
-    postUser
+async function postLogin(req, res) {
+
+    const userBadge = req.body.badge;
+    const userPassword = req.body.password;
+
+    const { user, token } = await loginUser({
+        badge: userBadge,
+        password: userPassword
+    });
+
+    res.status(200).json({
+        token,
+        user: {
+            _id: user._id,
+            name: user.name,
+            badge: user.badge,
+            role: user.role
+        }
+    });
 }
+
+export {
+    postUser,
+    postLogin
+};
