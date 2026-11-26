@@ -86,7 +86,10 @@ async function loginUser({ badge, password }) {
         role: user.role
     },
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN }
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN,
+            algorithm: process.env.JWT_ALGORITHM
+        }
     );
 
     return { user, token };

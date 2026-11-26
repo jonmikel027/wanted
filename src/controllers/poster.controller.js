@@ -37,7 +37,7 @@ async function postPoster(req, res) {
         reward,
         status,
         openTipLine,
-        createdBy: "507f1f77bcf86cd799439011" // Provisional hasta tener autenticación
+        createdBy: req.user.userId
     });
 
     res.status(201).json(newPoster);
