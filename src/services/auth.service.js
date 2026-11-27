@@ -81,6 +81,12 @@ async function loginUser({ badge, password }) {
         throw error;
     }
 
+    if (user.isActive === false) {
+        const error = new Error("Cuenta desactivada.");
+        error.status = 403;
+        throw error;
+    }
+
     const token = jwt.sign({
         userId: user._id.toString(),
         role: user.role

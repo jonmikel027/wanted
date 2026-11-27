@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
             message: "El rol debe ser 'user' o 'admin'."
         },
         default: "user"
+    },
+    isActive: {
+        type: Boolean,
+        required: [true, "El estado de la cuenta es obligatorio."],
+        default: true
     }
 }, {
     timestamps: true

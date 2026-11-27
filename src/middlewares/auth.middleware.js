@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import { findUserById } from "../services/user.service.js";
 
-function authenticateUser(req, res, next) {
+async function authenticateUser(req, res, next) {
 
     const requestAuthorization = req.headers.authorization;
 
@@ -20,26 +21,42 @@ function authenticateUser(req, res, next) {
         return next(error);
     }
 
+    let tokenData;
+
     try {
-        const tokenData = jwt.verify(token, process.env.JWT_SECRET, {
+        tokenData = jwt.verify(token, process.env.JWT_SECRET, {
             algorithms: [process.env.JWT_ALGORITHM]
         });
-
-        req.user = {
-            userId: tokenData.userId,
-            role: tokenData.role
-        }
     } catch (verificationError) {
 
         let errorMessage = "Token no válido.";
 
-        if (verificationError.name === "TokerExpiredError") {
+        if (verificationError.name === "TokenExpiredError") {
             errorMessage = "La sesión ha caducado. Inicia sesión de nuevo.";
         }
 
         const error = new Error(errorMessage);
         error.status = 401;
         return next(error);
+    }
+
+    const user = await findUserById(tokenData.userId);
+
+    if (!user) {
+        const error = new Error("La cuenta asociada al token ya no existe.");
+        error.status = 401;
+        return next(error);
+    }
+
+    if (user.isActive === false) {
+        const error = new Error("La cuenta está desactivada.");
+        error.status = 403;
+        return next(error);
+    }
+
+    req.user = {
+        userId: user._id.toString(),
+        role: user.role
     }
 
     next();

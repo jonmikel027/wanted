@@ -6,13 +6,30 @@ async function findUserByBadge(badge) {
     return foundUser;
 }
 
+async function findUserById(userId) {
+    const foundUser = await UserModel.findById(userId);
+    return foundUser;
+}
+
 async function createUser(userData) {
 
     const newUser = await UserModel.create(userData);
     return newUser;
 }
 
+async function deactivateUserById(userId) {
+
+    const deactivatedUser = await UserModel.findByIdAndUpdate(userId,
+        { $set: { isActive: false } },
+        { new: true, runValidators: true }
+    );
+
+    return deactivatedUser;
+}
+
 export {
     findUserByBadge,
-    createUser
+    findUserById,
+    createUser,
+    deactivateUserById
 };
