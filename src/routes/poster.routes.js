@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { validatePosterId } from "../middlewares/validatePosterId.middleware.js";
+import { authenticateUser } from "../middlewares/auth.middleware.js";
 import {
     getAllPosters,
     getPosterById,
@@ -8,12 +9,14 @@ import {
     deletePoster
 } from "../controllers/poster.controller.js";
 
+
+
 const posterRouter = Router();
 
 posterRouter.get("/", getAllPosters);
 posterRouter.get("/:posterId", validatePosterId, getPosterById);
-posterRouter.post("/", postPoster);
-posterRouter.patch("/:posterId", validatePosterId, editPoster);
-posterRouter.delete("/:posterId", validatePosterId, deletePoster);
+posterRouter.post("/", authenticateUser, postPoster);
+posterRouter.patch("/:posterId", authenticateUser, validatePosterId, editPoster);
+posterRouter.delete("/:posterId", authenticateUser, validatePosterId, deletePoster);
 
 export { posterRouter };
